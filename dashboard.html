@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Digital Diary</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="dashboard.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <h2>Digital Diary Dashboard</h2>
+        <div class="navbar-actions">
+            <button onclick="openSettings()">Settings</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-section">
+                <img src="image." alt="User Avatar" class="profile-img">
+                <h3 id="userName">User Name</h3>
+            </div>
+            <nav>
+                <div class="nav-item" onclick="showSection('diary')">📔 Diary Entry</div>
+                <div class="nav-item" onclick="showSection('fitness')">💪 Fitness Tracker</div>
+                <div class="nav-item" onclick="showSection('mood')">😊 Mood Tracker</div>
+                <div class="nav-item" onclick="showSection('achievements')">🏆 Achievements</div>
+                <div class="nav-item" onclick="showSection('goals')">🎯 Goals & Habits</div>
+                
+                <div class="nav-item" onclick="showSection('social')">📲 Social Sharing</div>
+                <button id="exportPdfBtn">📁 Export to PDF</button>
+                <div class="nav-item" 
+                onclick="showSection('userProfile')">👤 User Profile</div>
+                <div class="nav-item" onclick="showSection('settings')">⚙ Settings</div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Diary Entry -->
+            <div id="diary" class="section active">
+                <h2>Diary Entry</h2>
+                <textarea id="diaryEntry" placeholder="Write your thoughts here..." oninput="analyzeMood()"></textarea>
+                <p id="moodFeedback">Mood: Analyzing...</p>
+                <button onclick="saveDiary()">Save Entry</button>
+                <p id="diaryTimestamp"></p>
+            </div>
+
+            
+             <!-- Fitness Tracker -->
+<div id="fitness" class="section">
+    <h2>Fitness Tracker</h2>
+    <form id="fitnessForm">
+        <label>Steps Walked: <input type="number" id="steps" placeholder="Steps"></label>
+        <label>Hours of Sleep: <input type="number" id="sleep" placeholder="Hours"></label>
+        
+        <!-- Additional Fields for User Information -->
+        <label for="age">Age: <input type="number" id="age" placeholder="Enter your age"></label>
+        <label for="bloodPressure">Blood Pressure (e.g., 120/80): <input type="text" id="bloodPressure" placeholder="Enter your blood pressure"></label>
+        <label for="height">Height (cm): <input type="number" id="height" placeholder="Enter your height in cm"></label>
+        <label for="weight">Weight (kg): <input type="number" id="weight" placeholder="Enter your weight in kg"></label>
+        
+        <button type="button" onclick="calculateFitness()">Calculate Fitness Factor</button>
+    </form>
+    <p id="fitnessFeedback">Fitness Factor: Not Calculated</p>
+</div>
+
+
+            <!-- <div id="fitness" class="section">
+                <h2>Fitness Tracker</h2>
+                <form id="fitnessForm">
+                    <label>Steps Walked: <input type="number" id="steps" placeholder="Steps"></label>
+                    <label>Hours of Sleep: <input type="number" id="sleep" placeholder="Hours"></label>
+                    <button type="button" onclick="calculateFitness()">Calculate Fitness Factor</button>
+                </form>
+                <p id="fitnessFeedback">Fitness Factor: Not Calculated</p>
+            </div> -->
+
+            <!-- Mood Tracker -->
+            <div id="mood" class="section">
+                <h2>Mood Tracker</h2>
+                <p>Current Mood Based on Diary Entry:</p>
+                <p id="moodResult">Analyzing...</p>
+            </div>
+
+            <!-- Achievements -->
+            <div id="achievements" class="section">
+                <h2>Achievements</h2>
+                <button onclick="logAchievement()">Log Achievement</button>
+                <button onclick="clearAchievements()">Clear All</button>
+                
+                <table border="1" style="width:100%; margin-top: 20px; border-collapse: collapse; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Achievement</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                        </tr>
+                    </thead>
+                    <tbody id="achievementTableBody">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            
+
+            <!-- Reflection -->
+            <div id="reflection" class="section">
+                <h2>Reflection</h2>
+                <p id="reflectionList">Past entries will appear here.</p>
+                <button onclick="viewPastEntries()">View Past Entries</button>
+            </div>
+  <!-- Goals & Habits -->
+  <div id="goals" class="section">
+    <h2>🎯 Goals & Habits</h2>
+    <form id="goalsForm">
+        <label for="goalInput">New Goal:</label>
+        <input type="text" id="goalInput" placeholder="What do you want to achieve?" required>
+        
+        <label for="prioritySelect">Priority:</label>
+        <select id="prioritySelect">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        
+        <button type="button" class="add-button" onclick="addGoal()">➕ Add Goal</button>
+    </form>
+    <ul id="goalList" class="styled-list">
+        <!-- Goals will appear here -->
+    </ul>
+</div>
+
+            
+            
+
+            <!-- Social Sharing -->
+            <div id="social" class="section">
+                <h2>Social Sharing</h2>
+            
+                <!-- Button for Instagram -->
+                <button onclick="showInstagramShare()" id="shareButton">Share Progress on Instagram</button>
+            
+                <!-- Button for X -->
+                <button onclick="showXShare()" id="shareButtonX">Share Progress on X</button>
+            
+                <!-- Status Message -->
+                <p id="socialStatus">Not Shared Yet</p>
+            
+                <!-- Instagram Link -->
+                <div id="instagramLink" style="display: none; margin-top: 20px;">
+                    <a href="https://www.instagram.com/accounts/login/" target="_blank" id="instagramLogin" class="styledLink">
+                        <img src="insta.jpeg" alt="Instagram Icon" class="socialIcon">
+                        Click here to log in and share on Instagram
+                    </a>
+                </div>
+            
+                <!-- X.com Link -->
+                <div id="xLink" style="display: none; margin-top: 20px;">
+                    <a href="https://x.com/login" target="_blank" id="xLogin" class="styledLink">
+                        <img src="x.png" alt="X Icon" class="socialIcon">
+                        Click here to log in and share on X
+                    </a>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div id="userProfile" class="section">
+                <h2>User Profile</h2>
+                <img src="default-avatar.png" alt="Profile Picture" id="profilePic" class="profile-img">
+                <button onclick="changeProfilePic()">Change Profile Picture</button>
+                <p id="profileInfo">User Info: Not updated</p>
+            </div>
+            <div id="settings" class="section">
+                <h2>Settings</h2>
+            
+                <!-- Available Settings Information -->
+                <div id="availableSettings">
+                    <h3>Available Settings:</h3>
+                    <ul>
+                        <li><strong>Display Name:</strong> Set your display name.</li>
+                        <li><strong>Text Size:</strong> Change the size of the text on the page.</li>
+                        <li><strong>Text Color:</strong> Change the color of the text.</li>
+                        <li><strong>Background Color:</strong> Change the background color of the page.</li>
+                        <li><strong>Font Style:</strong> Choose from different font styles.</li>
+                        <li><strong>Dark/Light Mode:</strong> Toggle between dark and light modes for better readability.</li>
+                    </ul>
+                </div>
+            
+                <!-- Change Display Name -->
+                <label for="displayName">Display Name:</label>
+                <input type="text" id="displayName" onchange="toggleTextOptions()">
+            
+                <!-- Text Size Section (Initially Hidden) -->
+                <div id="textSizeSection" style="display:none;">
+                    <label for="textSize">Text Size:</label>
+                    <input type="range" id="textSize" min="12" max="36" value="16" onchange="updateTextSize()">
+                    <span id="textSizeValue">16px</span>
+                </div>
+            
+                <!-- Text Color Section (Initially Hidden) -->
+                <div id="textColorSection" style="display:none;">
+                    <label for="textColor">Text Color:</label>
+                    <input type="color" id="textColor" onchange="updateTextColor()">
+                </div>
+            
+                <!-- Background Color Section (Initially Hidden) -->
+                <div id="backgroundColorSection" style="display:none;">
+                    <label for="backgroundColor">Background Color:</label>
+                    <input type="color" id="backgroundColor" onchange="updateBackgroundColor()">
+                </div>
+            
+                <!-- Font Style Section (Initially Hidden) -->
+                <div id="fontStyleSection" style="display:none;">
+                    <label for="fontStyle">Font Style:</label>
+                    <select id="fontStyle" onchange="updateFontStyle()">
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                    </select>
+                </div>
+            
+                <!-- Dark/Light Mode Toggle -->
+                <div id="themeSection" style="display:none;">
+                    <label for="darkModeToggle">Dark Mode:</label>
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                </div>
+            
+                <!-- Save Settings Button -->
+                <button onclick="saveSettings()">Save Settings</button>
+            </div>
+             
+        </div>
+    </div>
+</body>
+</html>

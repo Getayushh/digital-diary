@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Diary</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- Welcome Popup -->
+     
+    <div class="welcome-popup" id="welcomePopup">
+        <p>Welcome to Digital Diary!</p>
+        <button onclick="closePopup()">Get Started</button>
+    </div>
+    
+
+    <!-- Main Content -->
+    
+    <div class="main-content" id="mainContent" style="display: none;">
+        <header>
+            <div class = "navbar">
+                <h1 class="main-heading">Digital Diary</h1>
+            <div class="slogan">Your Day, Your Story, Your Way!</div>
+            <button onclick="showLogin()">Login</button>
+            </div>
+            
+        </header>
+
+    <!-- IMAGE SECTION -->
+        
+       <!-- Image and Text Section -->
+       <div class="image-text-section">
+        <div class="image-container">
+            <!-- Slideshow -->
+            <img id="slideshowImage" src="./assets1/1.jpg" alt="Slideshow Image">
+        </div>
+        <div class="text-container">
+            <h2>The Future is Digital</h2>
+            <p>
+                Digital literacy empowers individuals to use technology effectively, enhancing productivity and creating
+                opportunities in education, communication, and employment.
+            </p>
+        </div>
+    </div>
+
+
+      <!-- About Section -->
+      <section class="about-section" id="about">
+        <h2>About Digital Diary</h2>
+        <p>
+            Digital Diary is a secure platform to document your thoughts, track your goals, and reflect on your journey.
+            Enjoy a personalized, interactive experience designed to keep you motivated and organized.
+        </p>
+        <p>
+            Explore our key features below to see how Digital Diary can enhance your daily journaling!
+        </p>
+    </section>
+
+
+          <!-- Flip Card Section -->
+    <div class="card-section">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Innovation</h2>
+                </div>
+                <div class="card-back">Drive progress with creativity</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Learning</h2>
+                </div>
+                <div class="card-back">Keep growing every day</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Collaboration</h2>
+                </div>
+                <div class="card-back">Teamwork achieves success</div>
+            </div>
+        </div>
+    </div>
+    <div class="focus-area">
+        <h2>Our Focus Areas & Skills</h2>
+        <p>
+            "Digital Literacy" represents the essential skills required to develop digital competence and confidently
+            and critically use Information and Communication Technology (ICT) for work, leisure, learning, and
+            communication. In an increasingly digital world, these skills are vital for personal and professional
+            growth. They enable individuals to navigate the complexities of modern technologies, opening doors to
+            countless opportunities for success and innovation.
+
+            Mastering digital literacy equips people with the ability to effectively use computers, software, and online
+            platforms for various tasks. From understanding basic computer operations to creating and editing digital
+            content, it allows individuals to stay productive in both personal and professional settings. Moreover, it
+            promotes safe and responsible online behavior, encouraging the protection of personal data and fostering
+            awareness about cybersecurity. The ability to communicate effectively through emails, video conferencing,
+            and collaborative platforms has become indispensable in modern workplaces and everyday interactions.
+        </p>
+    </div>
+
+        <!-- Feature Detail Modal -->
+        <div class="feature-modal" id="featureModal">
+            <div class="feature-modal-content">
+                <span class="close-modal" onclick="closeFeatureModal()">&times;</span>
+                <h3 id="featureTitle"></h3>
+                <p id="featureDescription"></p>
+            </div>
+        </div>
+
+        <!-- Login Container -->
+        <div class="login-modal" id="loginModal">
+            <div class="login-modal-content">
+                <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+                <h2>Login to Digital Diary</h2>
+                <form id="loginForm" onsubmit="validateLogin(event)">
+                    <input type="email" placeholder="Email" id="loginEmail" required>
+                    <input type="password" placeholder="Password" id="loginPassword" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p id="loginError" style="color: red; display: none;">Invalid credentials. Please try again.</p>
+                <button onclick="showSignUp()">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Sign Up Container -->
+        <div class="sign-up-modal" id="signUpModal">
+            <div class="sign-up-modal-content">
+                <span class="close-modal" onclick="closeSignUpModal()">&times;</span>
+                <h2>Sign Up for Digital Diary</h2>
+                <form id="signUpForm" onsubmit="handleSignUp(event)">
+                    <input type="email" placeholder="Email" id="signUpEmail" required>
+                    <input type="password" placeholder="Password" id="signUpPassword" required>
+                    <button type="submit">Sign Up</button>
+                    
+                </form>
+                <p id="signUpError" style="color: red; display: none;">Email already exists. Please try again.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Digital Diary. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
